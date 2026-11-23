@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
@@ -670,11 +669,10 @@ async function seedDefaultPlansAndSettingsIfEmpty(db: SupabaseClient) {
   }
 }
 
-async function startServer() {
+export function createApiApp() {
   const app = express();
-  const PORT = Number(process.env.PORT || 3000);
-  const isProd = process.env.NODE_ENV === 'production';
 
+  app.set('trust proxy', 1);
   app.disable('x-powered-by');
   app.use(express.json({ limit: '64kb' }));
 
@@ -2145,7 +2143,16 @@ async function startServer() {
     res.status(404).json({ error: 'API endpoint not found.' });
   });
 
+  return app;
+}
+
+async function startServer() {
+  const app = createApiApp();
+  const PORT = Number(process.env.PORT || 3000);
+  const isProd = process.env.NODE_ENV === 'production';
+
   if (!isProd) {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -2164,7 +2171,9 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start GROEarnX server:', err);
-  process.exit(1);
-});
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('Failed to start GROEarnX server:', err);
+    process.exit(1);
+  });
+}
