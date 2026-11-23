@@ -1,0 +1,6 @@
+{
+  "name": "GROEarnX",
+  "description": "GROEarnX — Grow Smarter. Manage Your Investments. A modern fintech investment management and portfolio simulation platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

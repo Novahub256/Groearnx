@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Manrope', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  :root {
+    --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+
+  html, body {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    background-color: #061121;
+    color: #f1f5f9;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  button, input, select, textarea, table, th, td, code, pre,
+  .font-display, .font-sans, .font-mono {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
