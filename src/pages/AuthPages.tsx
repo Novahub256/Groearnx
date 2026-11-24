@@ -223,7 +223,7 @@ export function AuthPages({
     try {
       const verified = await refreshAuthUser();
       if (verified) {
-        showToast('Email verified! Full DEMO dashboard unlocked.', 'success');
+        showToast('Email verified! Dashboard access unlocked.', 'success');
         onNavigate('/dashboard');
       } else if (!authUser) {
         setInfoMsg(
@@ -606,7 +606,7 @@ export function AuthPages({
             <div className="space-y-1">
               <h1 className="font-display text-2xl font-bold text-white">Create GROEarnX Account</h1>
               <p className="text-xs text-slate-400">
-                Start exploring DEMO portfolio management and simulated investment plans.
+                Start exploring structured portfolio modeling and simulated investment plans.
               </p>
             </div>
 
@@ -731,7 +731,15 @@ export function AuthPages({
                   >
                     Terms &amp; Conditions
                   </button>{' '}
-                  and understand GROEarnX operates in DEMO simulation mode with illustrative rates.
+                  and{' '}
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('/legal/risk')}
+                    className="text-emerald-400 hover:underline cursor-pointer"
+                  >
+                    Risk Disclosure
+                  </button>
+                  , and acknowledge that GROEarnX operates as a portfolio simulation environment.
                 </span>
               </label>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, Layers, Lock, Scale, ShieldCheck } from 'lucide-react';
+import { Layers, Lock, Scale, ShieldCheck } from 'lucide-react';
 import { ILLUSTRATIVE_RATES_NOTICE } from '../constants/plans';
 
 export function AboutPage({ onNavigate }: { onNavigate: (path: string) => void }) {
@@ -37,7 +37,7 @@ export function AboutPage({ onNavigate }: { onNavigate: (path: string) => void }
           {
             icon: Lock,
             title: 'Custody & Compliance Readiness',
-            desc: 'Real-money deposits, pooled investment custody, and live payouts remain disabled in this initial DEMO phase pending formal legal and payment-provider authorizations.',
+            desc: 'Real-money deposits, pooled investment custody, and live payouts remain disabled in this simulation phase pending formal legal and payment-provider authorizations.',
           },
         ].map((card) => (
           <div
@@ -51,11 +51,18 @@ export function AboutPage({ onNavigate }: { onNavigate: (path: string) => void }
         ))}
       </div>
 
-      <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-6 flex items-start gap-3">
-        <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-        <div className="space-y-2 text-sm text-amber-100">
-          <p className="font-semibold">Operating Status Disclosure</p>
+      <div className="rounded-2xl border border-white/10 bg-[#0B1B34] p-6 flex items-start gap-3">
+        <Scale className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+        <div className="space-y-2 text-sm text-slate-300">
+          <p className="font-semibold text-white">Operating Status Disclosure</p>
           <p className="leading-relaxed">{ILLUSTRATIVE_RATES_NOTICE}</p>
+          <button
+            type="button"
+            onClick={() => onNavigate('/legal/risk')}
+            className="text-xs font-semibold text-emerald-400 hover:underline cursor-pointer"
+          >
+            Read Risk Disclosure &amp; Terms →
+          </button>
         </div>
       </div>
 

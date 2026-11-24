@@ -156,7 +156,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
       await adminReviewDepositApi(depositId, decision, adminNotes[depositId] || '');
       await loadAdminOverview();
       triggerDataRefresh();
-      showToast(`DEMO deposit ${decision}.`, 'success');
+      showToast(`Payment request ${decision}.`, 'success');
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Unable to process deposit.', 'error');
     } finally {
@@ -174,7 +174,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
       await adminReviewWithdrawalApi(withdrawalId, decision, adminNotes[withdrawalId] || '');
       await loadAdminOverview();
       triggerDataRefresh();
-      showToast(`DEMO withdrawal ${decision}.`, 'success');
+      showToast(`Withdrawal request ${decision}.`, 'success');
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Unable to process withdrawal.', 'error');
     } finally {
@@ -262,7 +262,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
     { id: 'overview', label: 'Overview' },
     {
       id: 'requests',
-      label: `DEMO Requests (${pendingDeposits.length + pendingWithdrawals.length})`,
+      label: `Requests (${pendingDeposits.length + pendingWithdrawals.length})`,
     },
     { id: 'users', label: `Users (${users.length})` },
     { id: 'investments', label: `Sim Investments (${investments.length})` },
@@ -311,10 +311,10 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { label: 'Total Registered Users', val: String(users.length), sub: `${activeUsersCount} active` },
-              { label: 'Pending DEMO Requests', val: String(pendingDeposits.length + pendingWithdrawals.length), sub: `${pendingDeposits.length} deposits · ${pendingWithdrawals.length} withdrawals` },
-              { label: 'Simulated Investments Volume', val: `$${totalSimulatedInvestments.toLocaleString()}`, sub: `${investments.length} total positions (DEMO)` },
-              { label: 'Approved DEMO Deposits', val: `$${totalSimulatedDeposits.toLocaleString()}`, sub: 'Simulated credit ledger' },
-              { label: 'Approved DEMO Withdrawals', val: `$${totalSimulatedWithdrawals.toLocaleString()}`, sub: 'Simulated payout ledger' },
+              { label: 'Pending Requests', val: String(pendingDeposits.length + pendingWithdrawals.length), sub: `${pendingDeposits.length} payment · ${pendingWithdrawals.length} withdrawal` },
+              { label: 'Simulated Investments', val: `$${totalSimulatedInvestments.toLocaleString()}`, sub: `${investments.length} total positions` },
+              { label: 'Approved Payment Requests', val: `$${totalSimulatedDeposits.toLocaleString()}`, sub: 'Illustrative credit ledger' },
+              { label: 'Approved Withdrawal Requests', val: `$${totalSimulatedWithdrawals.toLocaleString()}`, sub: 'Simulated payout ledger' },
               { label: 'Recorded Audit Events', val: String(auditLogs.length), sub: 'Immutable admin & user trail' },
             ].map((kpi) => (
               <div
@@ -353,16 +353,16 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
         </div>
       )}
 
-      {/* DEMO REQUESTS */}
+      {/* PAYMENT & WITHDRAWAL REQUESTS */}
       {tab === 'requests' && (
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <div className="rounded-2xl border border-white/10 bg-[#0B1B34] p-6 space-y-4">
             <h2 className="font-display text-lg font-semibold text-white">
-              DEMO Deposit Requests ({deposits.length})
+              Payment Requests ({deposits.length})
             </h2>
             <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
               {deposits.length === 0 ? (
-                <p className="text-xs text-slate-400">No deposit requests recorded.</p>
+                <p className="text-xs text-slate-400">No payment requests recorded.</p>
               ) : (
                 deposits.map((dep) => (
                   <div
@@ -408,7 +408,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
                             className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1.5 font-semibold text-slate-950 hover:bg-emerald-400 cursor-pointer"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
-                            Approve DEMO
+                            Approve
                           </button>
                           <button
                             type="button"
@@ -434,7 +434,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
 
           <div className="rounded-2xl border border-white/10 bg-[#0B1B34] p-6 space-y-4">
             <h2 className="font-display text-lg font-semibold text-white">
-              DEMO Withdrawal Requests ({withdrawals.length})
+              Withdrawal Requests ({withdrawals.length})
             </h2>
             <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
               {withdrawals.length === 0 ? (
@@ -484,7 +484,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
                             className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1.5 font-semibold text-slate-950 hover:bg-emerald-400 cursor-pointer"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
-                            Approve DEMO
+                            Approve
                           </button>
                           <button
                             type="button"
@@ -531,8 +531,8 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
                   <tr>
                     <th className="px-5 py-3 font-medium">Member</th>
                     <th className="px-5 py-3 font-medium">Email</th>
-                    <th className="px-5 py-3 font-medium text-right">DEMO Balance</th>
-                    <th className="px-5 py-3 font-medium text-right">DEMO Invested</th>
+                    <th className="px-5 py-3 font-medium text-right">Illustrative Balance</th>
+                    <th className="px-5 py-3 font-medium text-right">Simulated Invested</th>
                     <th className="px-5 py-3 font-medium">Status</th>
                     <th className="px-5 py-3 font-medium text-right">Actions</th>
                   </tr>
@@ -613,7 +613,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
                     <tr key={inv.id}>
                       <td className="px-5 py-3 font-mono text-white">{inv.id}</td>
                       <td className="px-5 py-3 font-mono text-slate-300">{inv.userId}</td>
-                      <td className="px-5 py-3 text-slate-200">{inv.planName} (DEMO)</td>
+                      <td className="px-5 py-3 text-slate-200">{inv.planName}</td>
                       <td className="px-5 py-3 text-right font-mono text-emerald-400 tabular-nums">
                         ${inv.amount.toLocaleString()}
                       </td>
@@ -803,7 +803,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
               Platform Configuration
             </h2>
             <label className="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
-              <span>Enable DEMO Deposit Requests</span>
+              <span>Enable Payment Requests</span>
               <input
                 type="checkbox"
                 checked={settingsDraft.depositsEnabled}
@@ -813,7 +813,7 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
               />
             </label>
             <label className="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
-              <span>Enable DEMO Withdrawal Requests</span>
+              <span>Enable Withdrawal Requests</span>
               <input
                 type="checkbox"
                 checked={settingsDraft.withdrawalsEnabled}
@@ -916,13 +916,13 @@ export function AdminDashboardPage({ onNavigate }: { onNavigate: (path: string) 
                 <span className="font-mono text-emerald-400">{inspectedUser.referralCode}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">DEMO Balance</span>
+                <span className="text-slate-400">Illustrative Balance</span>
                 <span className="font-mono text-white">
                   ${inspectedUser.simulatedBalance.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">DEMO Invested</span>
+                <span className="text-slate-400">Simulated Invested</span>
                 <span className="font-mono text-white">
                   ${inspectedUser.simulatedInvested.toLocaleString()}
                 </span>

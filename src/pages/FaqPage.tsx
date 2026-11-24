@@ -13,7 +13,7 @@ export function FaqPage({ onNavigate }: { onNavigate: (path: string) => void }) 
           Frequently Asked Questions
         </h1>
         <p className="text-sm sm:text-base text-slate-300">
-          Review how GROEarnX DEMO simulation, account security, and payment architecture work.
+          Review how GROEarnX portfolio simulation, account security, and payment architecture work.
         </p>
       </div>
 

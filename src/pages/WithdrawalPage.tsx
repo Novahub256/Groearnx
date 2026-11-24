@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { AlertTriangle, ArrowUpFromLine, Lock, ShieldCheck, XCircle } from 'lucide-react';
+import { ArrowUpFromLine, Lock, ShieldCheck, XCircle } from 'lucide-react';
 import { PAYMENT_METHODS } from '../constants/plans';
 import { useAuth } from '../context/AuthContext';
 import { cancelPendingWithdrawalApi, submitDemoWithdrawalApi } from '../lib/apiClient';
@@ -58,17 +58,17 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
 
     const numericAmount = Number(amount);
     if (!Number.isFinite(numericAmount) || numericAmount < 10) {
-      setError('Minimum simulated withdrawal amount is $10.');
+      setError('Minimum withdrawal request amount is $10.');
       return;
     }
     if (numericAmount > effectiveAvailable) {
       setError(
-        `Requested amount ($${numericAmount.toLocaleString()}) exceeds your available DEMO balance ($${effectiveAvailable.toLocaleString()} after pending requests).`
+        `Requested amount ($${numericAmount.toLocaleString()}) exceeds your illustrative balance ($${effectiveAvailable.toLocaleString()} after pending requests).`
       );
       return;
     }
     if (destination.trim().length < 4) {
-      setError('Please enter valid simulated destination details (minimum 4 characters).');
+      setError('Please enter valid destination reference details (minimum 4 characters).');
       return;
     }
     setReviewing(true);
@@ -83,7 +83,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
 
       const res = await submitDemoWithdrawalApi(method, Number(amount), destination.trim());
       triggerDataRefresh();
-      showToast(`DEMO withdrawal request ${res.referenceCode} submitted.`, 'success');
+      showToast(`Withdrawal request ${res.referenceCode} submitted.`, 'success');
       setAmount('');
       setDestination('');
       setConfirmPassword('');
@@ -102,7 +102,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
     try {
       await cancelPendingWithdrawalApi(withdrawalId);
       triggerDataRefresh();
-      showToast('DEMO withdrawal request cancelled.', 'info');
+      showToast('Withdrawal request cancelled.', 'info');
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Unable to cancel request.', 'error');
     }
@@ -112,26 +112,17 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="font-display text-2xl font-bold text-white">DEMO Withdrawal Request</h1>
+          <h1 className="font-display text-2xl font-bold text-white">Withdrawal Request</h1>
           <p className="text-sm text-slate-400">
-            Balance-validated simulated withdrawal workflow across five payment methods.
+            Balance-validated withdrawal request workflow across five supported channels.
           </p>
         </div>
         <div className="rounded-xl border border-white/10 bg-[#0B1B34] px-4 py-2 text-right">
-          <span className="text-[11px] text-slate-400 block">Available DEMO Balance</span>
+          <span className="text-[11px] text-slate-400 block">Illustrative Balance</span>
           <span className="font-mono text-lg font-bold text-emerald-400 tabular-nums">
             ${effectiveAvailable.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         </div>
-      </div>
-
-      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 flex items-start gap-3 text-xs text-amber-100 leading-relaxed">
-        <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-        <span>
-          <strong>DEMO Simulation Notice:</strong> No real funds are transferred and no blockchain
-          transactions are initiated. Withdrawals validate against your simulated balance and
-          require administrator review.
-        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -168,7 +159,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label htmlFor="wdr-amount" className="block text-xs font-semibold text-slate-300">
-                2. Enter Simulated Amount (USD)
+                2. Enter Amount (USD)
               </label>
               <button
                 type="button"
@@ -220,7 +211,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-colors cursor-pointer"
           >
             <ArrowUpFromLine className="w-4 h-4" />
-            Review DEMO Withdrawal
+            Review Withdrawal Request
           </button>
         </form>
 
@@ -229,7 +220,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
           <h2 className="font-display text-lg font-semibold text-white">Your Withdrawal Requests</h2>
           {withdrawals.length === 0 ? (
             <p className="text-sm text-slate-400 py-8 text-center">
-              No DEMO withdrawal requests submitted yet.
+              No withdrawal requests submitted yet.
             </p>
           ) : (
             <div className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
@@ -257,7 +248,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-xs text-slate-300">
-                    <span>{wdr.method} · DEMO</span>
+                    <span>{wdr.method} · Withdrawal request</span>
                     <span className="font-mono font-bold text-white tabular-nums">
                       ${wdr.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
@@ -305,11 +296,15 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
 
             <div className="rounded-xl border border-white/10 bg-[#071426] p-4 space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-slate-400">Method</span>
-                <span className="font-semibold text-white">{method} (DEMO)</span>
+                <span className="text-slate-400">Type</span>
+                <span className="font-semibold text-white">Withdrawal request</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Simulated Amount</span>
+                <span className="text-slate-400">Method</span>
+                <span className="font-semibold text-white">{method}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Amount</span>
                 <span className="font-mono font-bold text-emerald-400 tabular-nums">
                   ${Number(amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
@@ -319,6 +314,11 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
                 <span className="text-slate-200 truncate">{destination}</span>
               </div>
             </div>
+
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              Withdrawal requests validate against your illustrative balance and require review. No
+              live external or blockchain transfer is initiated.
+            </p>
 
             {isPasswordAccount && (
               <div className="space-y-1.5">
@@ -361,7 +361,7 @@ export function WithdrawalPage({ withdrawals }: { withdrawals: WithdrawalRequest
                 onClick={() => void handleConfirmWithdrawal()}
                 className="rounded-lg bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-emerald-400 disabled:opacity-50 cursor-pointer"
               >
-                {submitting ? 'Submitting...' : 'Confirm DEMO Withdrawal'}
+                {submitting ? 'Submitting...' : 'Confirm Withdrawal Request'}
               </button>
             </div>
           </div>

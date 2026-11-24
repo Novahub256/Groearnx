@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AlertTriangle, Calculator, CheckCircle2, ShieldAlert, X } from 'lucide-react';
+import { Calculator, CheckCircle2, ShieldAlert, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { calculateProjectionOnServer, createSimulatedInvestmentApi } from '../lib/apiClient';
 import { InvestmentPlan } from '../types/platform';
@@ -85,7 +85,7 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
     }
     if (!hasEnoughBalance) {
       setError(
-        `Insufficient DEMO balance ($${availableBalance.toLocaleString()}). Please submit a DEMO deposit request first.`
+        `Insufficient illustrative balance ($${availableBalance.toLocaleString()}). Please submit a payment request first.`
       );
       return;
     }
@@ -95,7 +95,7 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
       const created = await createSimulatedInvestmentApi(plan.id);
       triggerDataRefresh();
       showToast(
-        `DEMO investment created in ${created.planName} ($${created.amount.toLocaleString()}).`,
+        `Simulated investment created in ${created.planName} ($${created.amount.toLocaleString()}).`,
         'success'
       );
       onClose();
@@ -118,7 +118,7 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-medium text-emerald-400">
-              DEMO SIMULATION TIER · HYPOTHETICAL MODEL
+              Simulated Investment · Hypothetical Projection
             </p>
             <h2 id="plan-modal-title" className="font-display text-2xl font-bold text-white mt-1">
               {plan.name} — ${plan.amount.toLocaleString()}
@@ -134,14 +134,11 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
           </button>
         </div>
 
-        <div className="rounded-xl border border-amber-500/35 bg-amber-500/10 p-3.5 flex items-start gap-3 text-xs text-amber-100 leading-relaxed">
-          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-          <span>
-            <strong>Illustrative Figures Only:</strong> The {plan.illustrativeDailyRate}% proposed
-            daily rate is an unverified concept figure, not guaranteed or real earnings. This tool
-            only creates a simulated DEMO record.
-          </span>
-        </div>
+        <p className="text-xs text-slate-400 leading-relaxed">
+          The {plan.illustrativeDailyRate}% proposed daily rate is a hypothetical projection for
+          modeling only, not guaranteed or verified earnings. Confirming creates a simulated
+          investment record.
+        </p>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-xl border border-white/10 bg-[#071426] p-4">
@@ -208,10 +205,10 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
 
         {authUser && (
           <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#071426] px-4 py-3 text-sm">
-            <span className="text-slate-300">Your Available DEMO Balance</span>
+            <span className="text-slate-300">Illustrative Balance</span>
             <span
               className={`font-mono font-semibold tabular-nums ${
-                hasEnoughBalance ? 'text-emerald-400' : 'text-amber-400'
+                hasEnoughBalance ? 'text-emerald-400' : 'text-slate-200'
               }`}
             >
               ${availableBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -236,7 +233,7 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
               }}
               className="rounded-lg border border-emerald-500/40 px-4 py-2.5 text-sm font-semibold text-emerald-300 hover:bg-emerald-500/10 transition-colors cursor-pointer"
             >
-              Request DEMO Deposit
+              Submit Payment Request
             </button>
           )}
           <button
@@ -255,7 +252,7 @@ export function PlanCalculatorModal({ plan, onClose, onNavigate }: PlanCalculato
             <CheckCircle2 className="w-4 h-4" />
             {authUser
               ? submitting
-                ? 'Creating DEMO Position...'
+                ? 'Creating Position...'
                 : 'Create Simulated Investment'
               : 'Register to Simulate'}
           </button>

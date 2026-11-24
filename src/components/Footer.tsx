@@ -16,9 +16,9 @@ export function Footer({ onNavigate }: FooterProps) {
               Grow Smarter. Manage Your Investments.
             </p>
             <p className="text-xs leading-relaxed text-slate-400 max-w-md">
-              GROEarnX currently operates strictly in DEMO simulation mode. Displayed daily rates
-              are illustrative concept figures subject to independent verification and legal
-              review. No real-money deposits, custody, or payouts are enabled.
+              GROEarnX operates as a portfolio simulation environment. Displayed daily rates are
+              hypothetical projections subject to independent verification and legal review. No
+              real-money deposits, custody, or payouts are enabled.
             </p>
           </div>
 
@@ -119,7 +119,7 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} GROEarnX. All rights reserved.</p>
           <p>
-            DEMO Simulation Environment · Not licensed, regulated, insured, or audited · No real-money transactions
+            Portfolio Simulation Environment · Not licensed, regulated, insured, or audited · No real-money transactions
           </p>
         </div>
       </div>

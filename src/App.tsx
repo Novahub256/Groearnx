@@ -162,7 +162,7 @@ function AppRouter() {
         {currentPath === '/dashboard/withdraw' && <WithdrawalPage withdrawals={withdrawals} />}
         {currentPath === '/dashboard/plans' && <PlansPage onNavigate={navigate} />}
         {currentPath === '/dashboard/transactions' && (
-          <TransactionsPage transactions={transactions} />
+          <TransactionsPage transactions={transactions} onNavigate={navigate} />
         )}
         {currentPath === '/dashboard/referrals' && <ReferralsPage referrals={referrals} />}
         {currentPath === '/dashboard/security' && (

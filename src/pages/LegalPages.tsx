@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { ILLUSTRATIVE_RATES_NOTICE } from '../constants/plans';
 
 export type LegalDocType = 'terms' | 'privacy' | 'risk' | 'disclaimer';
@@ -37,8 +37,8 @@ export function LegalPage({
         ))}
       </div>
 
-      <div className="rounded-xl border border-amber-500/35 bg-amber-500/10 p-4 flex items-start gap-3 text-xs text-amber-100 leading-relaxed">
-        <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+      <div className="rounded-xl border border-white/10 bg-[#0B1B34] p-4 flex items-start gap-3 text-xs text-slate-300 leading-relaxed">
+        <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
         <span>{ILLUSTRATIVE_RATES_NOTICE}</span>
       </div>
 
@@ -49,18 +49,44 @@ export function LegalPage({
           </h1>
           <p>
             By creating an account or accessing GROEarnX, you acknowledge that the platform
-            currently operates exclusively as a DEMO simulation environment. No real-money
-            investment contracts, custody services, or regulated financial advice are provided.
+            currently operates exclusively as a portfolio simulation environment. No real-money
+            investment contracts, custody services, live payment settlements, or regulated
+            financial advice are provided.
           </p>
           <h2 className="font-display text-lg font-semibold text-white">
-            1. Simulation-Only Scope
+            1. Simulation Architecture &amp; Record Definitions
           </h2>
           <p>
-            All balances, deposit requests, withdrawal requests, and plan allocations recorded
-            within GROEarnX are simulated test records. Real customer deposits, pooled investment
-            management, and real payouts remain disabled until legal authorizations, independent
-            custody arrangements, and payment-provider approvals are formally established.
+            All portfolio figures and ledger entries inside GROEarnX represent simulated test
+            records designed to model financial workflows:
           </p>
+          <ul className="list-disc pl-5 space-y-2 text-slate-300">
+            <li>
+              <strong className="text-white">Illustrative balance:</strong> Account balances reflect
+              database-persisted simulation credits and do not represent cash, cryptocurrency, or
+              custodial funds held on your behalf.
+            </li>
+            <li>
+              <strong className="text-white">Simulated investment:</strong> Plan allocations model
+              capital deployment across nine illustrative tiers without purchasing underlying
+              securities or generating live investment yields.
+            </li>
+            <li>
+              <strong className="text-white">Payment request:</strong> Deposit submissions generate
+              internal reference codes for administrative workflow testing. No blockchain wallet
+              addresses, external checkout links, or real-money charges occur.
+            </li>
+            <li>
+              <strong className="text-white">Withdrawal request:</strong> Withdrawal submissions
+              validate against your illustrative balance and require administrative review without
+              initiating external bank, PayPal, mobile money, or blockchain transfers.
+            </li>
+            <li>
+              <strong className="text-white">Hypothetical projection:</strong> Plan calculators and
+              trajectory curves reflect mathematical models using proposed daily rates and do not
+              guarantee actual earnings or future returns.
+            </li>
+          </ul>
           <h2 className="font-display text-lg font-semibold text-white">
             2. Account Security &amp; Acceptable Use
           </h2>
@@ -70,11 +96,14 @@ export function LegalPage({
             simulated ledger balances.
           </p>
           <h2 className="font-display text-lg font-semibold text-white">
-            3. Separation of Future Subscriptions
+            3. Custody &amp; Separation of Future Services
           </h2>
           <p>
-            Should software subscription tiers be introduced in the future, subscription fees will
-            remain strictly separated from any client investment capital.
+            Real customer deposits, pooled investment management, and real payouts remain disabled
+            until legal authorizations, independent custody arrangements, and payment-provider
+            approvals are formally established. Should software subscription tiers be introduced in
+            the future, subscription fees will remain strictly separated from any client
+            investment capital.
           </p>
         </article>
       )}
@@ -111,12 +140,30 @@ export function LegalPage({
             future performance.
           </p>
           <h2 className="font-display text-lg font-semibold text-white">
-            Unverified Proposed Figures
+            1. Hypothetical Projections &amp; Unverified Rates
           </h2>
           <p>
-            The daily percentage figures displayed on the nine concept tiers (5% to 15% daily) are
-            illustrative concept inputs supplied for platform modeling. They are unverified, not
-            guaranteed, and should not be interpreted as sustainable real-world yields.
+            The daily percentage figures displayed across the nine plan tiers (5% to 15% daily)
+            are hypothetical projection inputs supplied for platform modeling. They are unverified,
+            not guaranteed, and should not be interpreted as sustainable real-world yields or
+            verified investment returns.
+          </p>
+          <h2 className="font-display text-lg font-semibold text-white">
+            2. Simulation Status &amp; Payment Request Safeguards
+          </h2>
+          <p>
+            GROEarnX does not currently custody funds, execute live market trades, generate live
+            deposit wallet addresses, or process external payouts. Illustrative balances, simulated
+            investments, payment requests, and withdrawal requests exist exclusively inside the
+            platform ledger to demonstrate tracking, approval queues, and balance validation logic.
+          </p>
+          <h2 className="font-display text-lg font-semibold text-white">
+            3. Regulatory Status
+          </h2>
+          <p>
+            GROEarnX does not claim to be licensed, regulated, insured, or audited. Real-money
+            functionality will not be activated without independent legal authorization, verified
+            custody partners, and regulatory compliance controls.
           </p>
         </article>
       )}
@@ -133,7 +180,8 @@ export function LegalPage({
           </p>
           <p>
             Nothing on this website constitutes investment, tax, or legal advice. All calculators,
-            charts, and dashboards present hypothetical DEMO simulations only.
+            charts, illustrative balances, and dashboards present portfolio simulations and
+            hypothetical projections only.
           </p>
         </article>
       )}

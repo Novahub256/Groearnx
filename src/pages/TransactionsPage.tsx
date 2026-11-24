@@ -15,7 +15,26 @@ function toDateMillis(ts: unknown): number {
   return 0;
 }
 
-export function TransactionsPage({ transactions }: { transactions: TransactionRecord[] }) {
+function formatTransactionType(type: TransactionRecord['type']): string {
+  switch (type) {
+    case 'deposit':
+      return 'Payment request';
+    case 'withdrawal':
+      return 'Withdrawal request';
+    case 'investment':
+      return 'Simulated investment';
+    default:
+      return 'Adjustment';
+  }
+}
+
+export function TransactionsPage({
+  transactions,
+  onNavigate,
+}: {
+  transactions: TransactionRecord[];
+  onNavigate?: (path: string) => void;
+}) {
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -51,9 +70,10 @@ export function TransactionsPage({ transactions }: { transactions: TransactionRe
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-bold text-white">Transaction History (DEMO)</h1>
+        <h1 className="font-display text-2xl font-bold text-white">Transaction History</h1>
         <p className="text-sm text-slate-400">
-          Search, filter, and inspect your simulated deposit, withdrawal, and investment ledger.
+          Search, filter, and inspect your payment requests, withdrawal requests, and simulated
+          investment ledger.
         </p>
       </div>
 
@@ -83,10 +103,10 @@ export function TransactionsPage({ transactions }: { transactions: TransactionRe
           aria-label="Filter by transaction type"
         >
           <option value="all">All Types</option>
-          <option value="deposit">Deposit (DEMO)</option>
-          <option value="withdrawal">Withdrawal (DEMO)</option>
-          <option value="investment">Investment (DEMO)</option>
-          <option value="adjustment">Adjustment (DEMO)</option>
+          <option value="deposit">Payment request</option>
+          <option value="withdrawal">Withdrawal request</option>
+          <option value="investment">Simulated investment</option>
+          <option value="adjustment">Adjustment</option>
         </select>
 
         <select
@@ -156,7 +176,7 @@ export function TransactionsPage({ transactions }: { transactions: TransactionRe
                 pageItems.map((tx) => (
                   <tr key={tx.id} className="hover:bg-white/[0.02]">
                     <td className="px-5 py-3.5 font-mono text-white">{tx.referenceCode}</td>
-                    <td className="px-5 py-3.5 capitalize text-slate-200">{tx.type} (DEMO)</td>
+                    <td className="px-5 py-3.5 text-slate-200">{formatTransactionType(tx.type)}</td>
                     <td className="px-5 py-3.5 text-slate-300">{tx.method}</td>
                     <td className="px-5 py-3.5 text-right font-mono font-semibold text-white tabular-nums">
                       ${tx.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -235,9 +255,7 @@ export function TransactionsPage({ transactions }: { transactions: TransactionRe
         >
           <div className="w-full max-w-md rounded-2xl border border-white/15 bg-[#0B1B34] p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-lg font-bold text-white">
-                Transaction Details (DEMO)
-              </h2>
+              <h2 className="font-display text-lg font-bold text-white">Transaction Details</h2>
               <button
                 type="button"
                 onClick={() => setSelectedTx(null)}
@@ -257,8 +275,8 @@ export function TransactionsPage({ transactions }: { transactions: TransactionRe
                 <span className="font-mono text-white">{selectedTx.referenceCode}</span>
               </div>
               <div className="flex justify-between gap-3">
-                <span className="text-slate-400">Type</span>
-                <span className="capitalize text-slate-200">{selectedTx.type} (DEMO)</span>
+                <span className="text-slate-400">Classification</span>
+                <span className="text-slate-200">{formatTransactionType(selectedTx.type)}</span>
               </div>
               <div className="flex justify-between gap-3">
                 <span className="text-slate-400">Method</span>
@@ -281,6 +299,38 @@ export function TransactionsPage({ transactions }: { transactions: TransactionRe
               <div className="pt-2 border-t border-white/10">
                 <span className="text-slate-400 block mb-1">Description</span>
                 <p className="text-slate-200 leading-relaxed">{selectedTx.description}</p>
+              </div>
+              <div className="rounded-xl border border-white/10 bg-[#071426] p-3.5 space-y-1.5 text-[11px] text-slate-400 leading-relaxed">
+                <p className="font-semibold text-slate-200">Simulation &amp; Disclosure Notice</p>
+                <p>
+                  This entry is a simulated ledger record inside the GROEarnX workspace ({formatTransactionType(selectedTx.type).toLowerCase()}).
+                  It does not represent a live external payment confirmation, custodial transfer, or
+                  verified investment return.
+                </p>
+                {onNavigate && (
+                  <div className="flex items-center gap-3 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedTx(null);
+                        onNavigate('/legal/terms');
+                      }}
+                      className="text-emerald-400 hover:underline cursor-pointer"
+                    >
+                      Terms &amp; Conditions
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedTx(null);
+                        onNavigate('/legal/risk');
+                      }}
+                      className="text-emerald-400 hover:underline cursor-pointer"
+                    >
+                      Risk Disclosure
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

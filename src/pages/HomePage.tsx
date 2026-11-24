@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-  AlertTriangle,
   ArrowRight,
   BarChart3,
   CheckCircle2,
   ChevronDown,
   Lock,
+  Scale,
   ShieldCheck,
   UserPlus,
   Wallet,
@@ -57,7 +57,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 <span aria-hidden="true">·</span>
                 <span>Transparent Disclosures</span>
                 <span aria-hidden="true">·</span>
-                <span>DEMO Simulation Mode</span>
+                <span>Portfolio Simulation</span>
               </div>
 
               <h1
@@ -177,8 +177,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   </g>
                 </svg>
                 <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
-                  <span>Simulation Workspace</span>
-                  <span className="font-mono text-emerald-400">DEMO MODE ACTIVE</span>
+                  <span>Portfolio Workspace</span>
+                  <span className="font-mono text-emerald-400">Illustrative Overview</span>
                 </div>
               </div>
             </div>
@@ -195,13 +195,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
               Our Proposed Investment Plans
             </h2>
             <p className="text-sm text-slate-400 mt-1">
-              Select any tier to view hypothetical projections or run a DEMO portfolio simulation.
+              Select any tier to explore hypothetical projections or create a simulated investment.
             </p>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-lg border border-amber-400/40 bg-amber-400/15 px-3.5 py-2 text-xs font-medium text-amber-200">
-            <AlertTriangle className="w-4 h-4 text-amber-300 shrink-0" />
-            <span>Daily rates are illustrative and subject to verification.</span>
-          </div>
+          <button
+            type="button"
+            onClick={() => onNavigate('/legal/risk')}
+            className="text-xs text-slate-400 hover:text-emerald-400 transition-colors text-left md:text-right cursor-pointer"
+          >
+            Rates reflect hypothetical projections · View Risk Disclosure →
+          </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-9 gap-3">
@@ -221,7 +224,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     {plan.illustrativeDailyRate}%
                   </span>
                 </p>
-                <p className="text-[11px] text-slate-400">Illustrative DEMO</p>
+                <p className="text-[11px] text-slate-400">Hypothetical projection</p>
               </div>
               <button
                 type="button"
@@ -243,7 +246,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               Proposed Deposit &amp; Withdrawal Options
             </h2>
             <p className="text-xs text-slate-400 mt-0.5">
-              Simulated request architecture · External providers disabled in DEMO
+              Payment request channels · External fund transfers disabled
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 flex-1">
@@ -283,20 +286,20 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 },
                 {
                   step: '02',
-                  title: 'Request Demo Funds',
-                  desc: 'Submit a simulated deposit request across five proposed payment channels.',
+                  title: 'Submit Payment Request',
+                  desc: 'Create a payment request record across five supported channels.',
                   icon: Wallet,
                 },
                 {
                   step: '03',
                   title: 'Select a Tier',
-                  desc: 'Allocate your DEMO balance into any of the nine illustrative tiers.',
+                  desc: 'Allocate your illustrative balance into any of the nine plan tiers.',
                   icon: BarChart3,
                 },
                 {
                   step: '04',
                   title: 'Track Ledger',
-                  desc: 'Review history, test balance-checked withdrawals, and inspect audit logs.',
+                  desc: 'Review history, submit balance-checked withdrawal requests, and inspect audit logs.',
                   icon: Lock,
                 },
               ].map((item) => (
@@ -325,7 +328,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   'Server-validated simulation calculations',
                   'Five proposed payment method workflows',
                   'Strict PII isolation & email verification',
-                  'Balance-checked DEMO withdrawal requests',
+                  'Balance-checked withdrawal requests',
                   'Full audit logging & admin review queue',
                 ].map((feature) => (
                   <li key={feature} className="flex items-start gap-2.5">
@@ -355,7 +358,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             Frequently Asked Questions
           </h2>
           <p className="text-sm text-slate-400">
-            Clear answers on DEMO simulation status, security architecture, and payment readiness.
+            Clear answers on simulation mechanics, security architecture, and payment readiness.
           </p>
         </div>
 
@@ -391,14 +394,32 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Risk Disclosure Banner */}
+      {/* Risk Disclosure Notice */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-6 space-y-2">
-          <h2 className="font-display text-base font-bold text-amber-200 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
-            Risk Disclosure &amp; Regulatory Status
-          </h2>
-          <p className="text-sm text-amber-100/90 leading-relaxed">
+        <div className="rounded-2xl border border-white/10 bg-[#0B1B34] p-6 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h2 className="font-display text-base font-bold text-white flex items-center gap-2">
+              <Scale className="w-4 h-4 text-emerald-400 shrink-0" />
+              Risk Disclosure &amp; Regulatory Status
+            </h2>
+            <div className="flex items-center gap-4 text-xs">
+              <button
+                type="button"
+                onClick={() => onNavigate('/legal/terms')}
+                className="text-emerald-400 hover:underline cursor-pointer"
+              >
+                Terms &amp; Conditions
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate('/legal/risk')}
+                className="text-emerald-400 hover:underline cursor-pointer"
+              >
+                Full Risk Disclosure
+              </button>
+            </div>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
             {ILLUSTRATIVE_RATES_NOTICE} GROEarnX does not claim to be licensed, regulated, insured,
             or audited. Real customer deposits, pooled capital custody, and live payouts remain
             disabled until independent legal authorizations, custody arrangements, compliance

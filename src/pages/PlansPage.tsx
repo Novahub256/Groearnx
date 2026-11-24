@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, BarChart3, Calculator } from 'lucide-react';
-import { ILLUSTRATIVE_RATES_NOTICE } from '../constants/plans';
+import { BarChart3, Calculator } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { InvestmentPlan } from '../types/platform';
 import { PlanCalculatorModal } from '../components/PlanCalculatorModal';
@@ -13,19 +12,28 @@ export function PlansPage({ onNavigate }: { onNavigate: (path: string) => void }
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 space-y-10">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
         <div className="space-y-3">
-          <p className="text-xs font-medium text-emerald-400">DEMO SIMULATION CATALOG</p>
+          <p className="text-xs font-medium text-emerald-400">Portfolio Simulation Catalog</p>
           <h1 className="font-display text-3xl sm:text-4xl font-bold text-white">
             Proposed Investment Plans
           </h1>
           <p className="text-sm sm:text-base text-slate-300 max-w-2xl">
-            Compare all nine illustrative tiers below. Select any plan to inspect hypothetical
-            projections or create a simulated DEMO investment in your dashboard.
+            Compare all nine tiers below. Select any plan to inspect hypothetical projections or
+            create a simulated investment in your dashboard.
           </p>
         </div>
 
-        <div className="rounded-xl border border-amber-500/35 bg-amber-500/10 p-4 max-w-md flex items-start gap-3 text-xs text-amber-100 leading-relaxed">
-          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-          <span>{ILLUSTRATIVE_RATES_NOTICE}</span>
+        <div className="rounded-xl border border-white/10 bg-[#0B1B34] px-4 py-3 max-w-md text-xs text-slate-300 leading-relaxed space-y-1">
+          <p>
+            Displayed daily rates represent hypothetical projections for modeling only and are not
+            guaranteed returns.
+          </p>
+          <button
+            type="button"
+            onClick={() => onNavigate('/legal/risk')}
+            className="font-semibold text-emerald-400 hover:underline cursor-pointer"
+          >
+            View Risk Disclosure &amp; Terms →
+          </button>
         </div>
       </div>
 
@@ -43,7 +51,7 @@ export function PlansPage({ onNavigate }: { onNavigate: (path: string) => void }
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold text-emerald-400">{plan.name}</span>
-                  <span className="text-xs text-slate-400">Illustrative DEMO</span>
+                  <span className="text-xs text-slate-400">Simulated investment</span>
                 </div>
                 <div>
                   <p className="font-mono text-3xl font-bold text-white tabular-nums">
@@ -57,7 +65,7 @@ export function PlansPage({ onNavigate }: { onNavigate: (path: string) => void }
                   <div className="flex items-center justify-between">
                     <span className="text-slate-400">Proposed Daily Rate</span>
                     <span className="font-mono font-semibold text-emerald-400 tabular-nums">
-                      {plan.illustrativeDailyRate}% (Illustrative)
+                      {plan.illustrativeDailyRate}% (Hypothetical)
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -93,9 +101,9 @@ export function PlansPage({ onNavigate }: { onNavigate: (path: string) => void }
         <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
           <h2 className="font-display text-lg font-semibold text-white flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-emerald-400" />
-            Tier Comparison Table (Hypothetical DEMO Figures)
+            Tier Comparison Table
           </h2>
-          <span className="text-xs text-amber-300">Non-guaranteed concept rates</span>
+          <span className="text-xs text-slate-400">Hypothetical projection figures</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">

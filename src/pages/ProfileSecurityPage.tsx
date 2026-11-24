@@ -208,7 +208,7 @@ export function ProfileSecurityPage({ loginActivity }: { loginActivity: LoginAct
           <div className="space-y-2.5">
             <h3 className="text-xs font-semibold text-slate-300">Notification Preferences</h3>
             <label className="flex items-center justify-between text-xs text-slate-300 cursor-pointer">
-              <span>DEMO deposit status updates</span>
+              <span>Payment request status updates</span>
               <input
                 type="checkbox"
                 checked={notifyDeposits}
@@ -216,7 +216,7 @@ export function ProfileSecurityPage({ loginActivity }: { loginActivity: LoginAct
               />
             </label>
             <label className="flex items-center justify-between text-xs text-slate-300 cursor-pointer">
-              <span>DEMO withdrawal status updates</span>
+              <span>Withdrawal request status updates</span>
               <input
                 type="checkbox"
                 checked={notifyWithdrawals}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, ArrowDownToLine, CheckCircle2, Info, XCircle } from 'lucide-react';
+import { ArrowDownToLine, CheckCircle2, Info, XCircle } from 'lucide-react';
 import { PAYMENT_METHODS } from '../constants/plans';
 import { useAuth } from '../context/AuthContext';
 import { cancelPendingDepositApi, submitDemoDepositApi } from '../lib/apiClient';
@@ -33,21 +33,21 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
 
     if (!authUser) return;
     if (!emailVerified) {
-      setError('Email verification is required before submitting DEMO deposit requests.');
+      setError('Email verification is required before submitting payment requests.');
       return;
     }
     if (!platformSettings.depositsEnabled) {
-      setError('Simulated deposit requests are currently paused by platform administration.');
+      setError('Payment requests are currently paused by platform administration.');
       return;
     }
     if (profile?.status === 'suspended') {
-      setError('Your account is suspended and cannot submit deposit requests.');
+      setError('Your account is suspended and cannot submit payment requests.');
       return;
     }
 
     const numericAmount = Number(amount);
     if (!Number.isFinite(numericAmount) || numericAmount < 10 || numericAmount > 1_000_000) {
-      setError('Please enter a simulated deposit amount between $10 and $1,000,000.');
+      setError('Please enter a payment request amount between $10 and $1,000,000.');
       return;
     }
 
@@ -62,9 +62,9 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
         instructionsNote: res.instructionsNote,
       });
       triggerDataRefresh();
-      showToast(`DEMO deposit request ${res.referenceCode} submitted.`, 'success');
+      showToast(`Payment request ${res.referenceCode} submitted.`, 'success');
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unable to submit deposit request.';
+      const msg = err instanceof Error ? err.message : 'Unable to submit payment request.';
       setError(msg);
       showToast(msg, 'error');
     } finally {
@@ -77,7 +77,7 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
     try {
       await cancelPendingDepositApi(depositId);
       triggerDataRefresh();
-      showToast('DEMO deposit request cancelled.', 'info');
+      showToast('Payment request cancelled.', 'info');
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Unable to cancel request.', 'error');
     }
@@ -85,25 +85,11 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-white">DEMO Deposit Request</h1>
-          <p className="text-sm text-slate-400">
-            Simulate funding requests across the five proposed payment channels.
-          </p>
-        </div>
-        <span className="self-start sm:self-auto font-mono text-xs text-amber-300 border border-amber-500/35 bg-amber-500/10 px-3 py-1.5 rounded-lg">
-          SIMULATION ONLY · NO REAL FUNDS
-        </span>
-      </div>
-
-      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 flex items-start gap-3 text-xs text-amber-100 leading-relaxed">
-        <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-        <span>
-          <strong>Payment Integration Safeguard:</strong> GROEarnX does not generate live
-          cryptocurrency wallet addresses or PayPal payment links in DEMO mode. Do not send real
-          money. Approved DEMO requests credit your simulated test balance only.
-        </span>
+      <div>
+        <h1 className="font-display text-2xl font-bold text-white">Payment Request</h1>
+        <p className="text-sm text-slate-400">
+          Submit a payment request across the five supported funding channels.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -143,7 +129,7 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label htmlFor="dep-amount" className="block text-xs font-semibold text-slate-300">
-                2. Enter Simulated Amount (USD)
+                2. Enter Amount (USD)
               </label>
               <input
                 id="dep-amount"
@@ -159,18 +145,18 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-300">Display Currency</label>
+              <label className="block text-xs font-semibold text-slate-300">Channel Unit</label>
               <div className="rounded-lg border border-white/10 bg-[#071426] px-3.5 py-2.5 text-sm text-slate-200 font-mono">
                 {activeMethodMeta.currency}
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl border border-sky-500/30 bg-sky-500/10 p-4 flex items-start gap-3 text-xs text-sky-100 leading-relaxed">
-            <Info className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+          <div className="rounded-xl border border-white/10 bg-[#071426] p-4 flex items-start gap-3 text-xs text-slate-300 leading-relaxed">
+            <Info className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-white mb-1">
-                Simulated Deposit Instructions ({activeMethodMeta.label})
+                Payment Request Details ({activeMethodMeta.label})
               </p>
               <p>{activeMethodMeta.demoInstruction}</p>
             </div>
@@ -186,7 +172,7 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
             <div className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-4 space-y-2 text-xs text-emerald-100">
               <p className="font-semibold flex items-center gap-2 text-emerald-300">
                 <CheckCircle2 className="w-4 h-4" />
-                Simulated Deposit Request Recorded (Pending Review)
+                Payment Request Recorded (Pending Review)
               </p>
               <p>
                 Reference: <strong className="font-mono text-white">{latestSubmission.referenceCode}</strong> · Amount:{' '}
@@ -201,16 +187,16 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 hover:bg-emerald-400 disabled:opacity-50 transition-colors cursor-pointer"
           >
             <ArrowDownToLine className="w-4 h-4" />
-            {submitting ? 'Generating Reference...' : 'Submit DEMO Deposit Request'}
+            {submitting ? 'Generating Reference...' : 'Submit Payment Request'}
           </button>
         </form>
 
-        {/* Deposit History */}
+        {/* Payment Request History */}
         <div className="lg:col-span-5 rounded-2xl border border-white/10 bg-[#0B1B34] p-6 space-y-4">
-          <h2 className="font-display text-lg font-semibold text-white">Your Deposit Requests</h2>
+          <h2 className="font-display text-lg font-semibold text-white">Your Payment Requests</h2>
           {deposits.length === 0 ? (
             <p className="text-sm text-slate-400 py-8 text-center">
-              No DEMO deposit requests submitted yet.
+              No payment requests submitted yet.
             </p>
           ) : (
             <div className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
@@ -238,7 +224,7 @@ export function DepositPage({ deposits }: { deposits: DepositRequest[] }) {
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-xs text-slate-300">
-                    <span>{dep.method} · DEMO</span>
+                    <span>{dep.method} · Payment request</span>
                     <span className="font-mono font-bold text-white tabular-nums">
                       ${dep.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>

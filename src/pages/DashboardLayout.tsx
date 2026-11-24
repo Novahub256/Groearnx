@@ -55,9 +55,9 @@ export function DashboardLayout({
 
   const navLinks = [
     { label: 'Overview', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Deposit (DEMO)', path: '/dashboard/deposit', icon: ArrowDownToLine },
-    { label: 'Withdraw (DEMO)', path: '/dashboard/withdraw', icon: ArrowUpFromLine },
-    { label: 'Simulated Plans', path: '/dashboard/plans', icon: BarChart3 },
+    { label: 'Deposit', path: '/dashboard/deposit', icon: ArrowDownToLine },
+    { label: 'Withdraw', path: '/dashboard/withdraw', icon: ArrowUpFromLine },
+    { label: 'Investment Plans', path: '/dashboard/plans', icon: BarChart3 },
     { label: 'Transactions', path: '/dashboard/transactions', icon: History },
     { label: 'Referrals', path: '/dashboard/referrals', icon: Users },
     { label: 'Profile & Security', path: '/dashboard/security', icon: UserCog },
@@ -90,13 +90,6 @@ export function DashboardLayout({
       <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 border-r border-white/10 bg-[#050E1B]">
         <div className="h-16 px-5 flex items-center border-b border-white/10">
           <BrandLogo compact onClick={() => handleNav('/')} />
-        </div>
-
-        <div className="px-4 py-3 border-b border-white/10">
-          <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-200">
-            <span className="font-semibold block">DEMO SIMULATION MODE</span>
-            <span className="text-amber-100/80">No real-money transfers</span>
-          </div>
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto" aria-label="Dashboard menu">
@@ -241,9 +234,6 @@ export function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-3 shrink-0 relative">
-            <span className="hidden sm:inline font-mono text-xs text-amber-300 border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 rounded-md">
-              DEMO ONLY
-            </span>
 
             <button
               type="button"
@@ -317,8 +307,8 @@ export function DashboardLayout({
                 <div>
                   <p className="font-semibold">Email Verification Required</p>
                   <p className="text-amber-100/80 mt-0.5">
-                    Verify your email address ({authUser?.email}) to enable simulated
-                    deposits, withdrawals, and investment allocations.
+                    Verify your email address ({authUser?.email}) to enable payment requests,
+                    withdrawal requests, and simulated investment allocations.
                   </p>
                 </div>
               </div>
